@@ -3,7 +3,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-} from "react-native";
+}
+from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   Box,
@@ -18,7 +19,8 @@ import {
   IconButton,
   HStack,
   KeyboardAvoidingView,
-} from "native-base";
+}
+from "native-base";
 
 
 export default function LoginScreen({ navigation }) {
@@ -38,12 +40,10 @@ export default function LoginScreen({ navigation }) {
           </Heading>
           <VStack space={2} mt={5}>
             <FormControl
-              // _text={{ color: "muted.700", fontSize: "sm", fontWeight: 600 }}
-            >
+              _text = { { color: "muted.700", fontSize: "sm", fontWeight: 600 } }
+                          >
               <FormControl.Label>Email ID</FormControl.Label>
-              <Input 
-               _light={{color: 'red' }}
-               _dark={{color: 'blue' }}
+              <Input
                />
             </FormControl>
             <FormControl mb={5}>

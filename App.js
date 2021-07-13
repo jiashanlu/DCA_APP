@@ -18,39 +18,48 @@ class App extends React.Component {
 
   setColorScheme = (colorScheme) => {
     this.setState({ colorMode: colorScheme });
+    console.log(colorScheme);
   };
 
-  listener = (Appearance.AppearanceListener = (
-    { colorScheme } /* <-- ignore */
-  ) => {
+  listener = (Appearance.AppearanceListener = ({ colorScheme }) => {
     this.setColorScheme(colorScheme);
-    console.log(colorScheme);
+
   });
 
-  initAppearanceListener = () => {
-    Appearance.addChangeListener(this.listener);
-  };
 
   componentDidMount = () => {
-    this.initAppearanceListener();
+    Appearance.addChangeListener(this.listener);
   };
 
   componentWillUnmount = () => {
     Appearance.removeChangeListener(this.listener);
   };
 
+  theme = extendTheme({
+    components: {
+      Input: {
+        baseStyle: (props) => {
+          return {
+            color: this.state.colorMode === 'dark' ? "#FFFFFF" : "#27272a",
+          };
+        },
+      },
+    },
+  })
+
+
   render() {
     return (
-      <NativeBaseProvider>
-        <NavigationContainer
-          theme={this.state.colorMode === "dark" ? DarkTheme : DefaultTheme}
+      <NativeBaseProvider theme={this.theme} >
+      <NavigationContainer theme= {this.state.colorMode === 'dark' ? DarkTheme : DefaultTheme}
         >
           <Stack.Navigator>
             <Stack.Screen name="Home" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-      </NativeBaseProvider>
+         </NativeBaseProvider>
+
     );
   }
 }
