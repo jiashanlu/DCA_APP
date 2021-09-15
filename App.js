@@ -6,7 +6,10 @@ import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import { Appearance } from "react-native";
 import { DefaultTheme, DarkTheme } from "@react-navigation/native";
-
+import Amplify from 'aws-amplify'
+import config from './src/aws-exports'
+import { withAuthenticator } from 'aws-amplify-react-native'
+Amplify.configure(config)
 const Stack = createStackNavigator();
 
 class App extends React.Component {
@@ -63,4 +66,4 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+export default  withAuthenticator(App);

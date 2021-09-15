@@ -36,7 +36,7 @@ export default function LoginScreen({ navigation }) {
             Welcome
           </Heading>
           <Heading color="muted.400" size="xs">
-            Sign in to continue!
+            Sign in to continue zzz!
           </Heading>
           <VStack space={2} mt={5}>
             <FormControl
