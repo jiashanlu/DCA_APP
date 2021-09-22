@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "myapp",
     "name": "DCA_APP",
     "userInterfaceStyle": "automatic",
     "slug": "DCA_APP",

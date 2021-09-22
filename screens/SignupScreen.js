@@ -1,5 +1,6 @@
 import * as React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useState } from "react";
+import { Auth } from "aws-amplify";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import {
   Box,
@@ -8,13 +9,23 @@ import {
   FormControl,
   Input,
   Button,
-  Icon,
-  IconButton,
-  HStack,
   KeyboardAvoidingView,
 } from "native-base";
 
 export default function SignupScreen() {
+  
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  async function signUp() {
+        try {
+          await Auth.signUp({ username, password, attributes: { email }});
+          console.log(' Sign-up Confirmed');
+        } catch (error) {
+          console.log(' Error signing up...', error);
+        }
+      }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Box flex={1} p={2} w="90%" mx="auto" justifyContent="center" safeArea>
@@ -27,13 +38,21 @@ export default function SignupScreen() {
           </Heading>
 
           <VStack space={2} mt={5}>
+          <FormControl>
+              <FormControl.Label
+                _text={{ color: "muted.700", fontSize: "sm", fontWeight: 600 }}
+              >
+                Username
+              </FormControl.Label>
+              <Input value={username} onChangeText={text => setUsername(text)}/>
+            </FormControl>
             <FormControl>
               <FormControl.Label
                 _text={{ color: "muted.700", fontSize: "sm", fontWeight: 600 }}
               >
                 Email
               </FormControl.Label>
-              <Input />
+              <Input value={email} onChangeText={text => setEmail(text)}/>
             </FormControl>
             <FormControl>
               <FormControl.Label
@@ -41,53 +60,12 @@ export default function SignupScreen() {
               >
                 Password
               </FormControl.Label>
-              <Input type="password" />
-            </FormControl>
-            <FormControl>
-              <FormControl.Label
-                _text={{ color: "muted.700", fontSize: "sm", fontWeight: 600 }}
-              >
-                Confirm Password
-              </FormControl.Label>
-              <Input type="password" />
+              <Input type="password" value={password} onChangeText={text => setPassword(text)}/>
             </FormControl>
             <VStack space={2} mt={5}>
-              <Button colorScheme="cyan" _text={{ color: "white" }}>
+              <Button colorScheme="cyan" _text={{ color: "white" }} onPress={signUp}>
                 SignUp
               </Button>
-
-              <HStack justifyContent="center" alignItem="center">
-                <IconButton
-                  variant="unstyled"
-                  startIcon={
-                    <Icon
-                      as={<MaterialCommunityIcons name="facebook" />}
-                      color="muted.700"
-                      size="sm"
-                    />
-                  }
-                />
-                <IconButton
-                  variant="unstyled"
-                  startIcon={
-                    <Icon
-                      as={<MaterialCommunityIcons name="google" />}
-                      color="muted.700"
-                      size="sm"
-                    />
-                  }
-                />
-                <IconButton
-                  variant="unstyled"
-                  startIcon={
-                    <Icon
-                      as={<MaterialCommunityIcons name="github" />}
-                      color="muted.700"
-                      size="sm"
-                    />
-                  }
-                />
-              </HStack>
             </VStack>
           </VStack>
         </KeyboardAvoidingView>
